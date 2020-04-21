@@ -16,4 +16,4 @@ const mapDispatchToProps = {
 export default connect(mapStateToProps, mapDispatchToProps)(UserDetails)
 
 
-
+// export default UserDetails; 

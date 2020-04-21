@@ -1,47 +1,84 @@
-const GET_ALL_USERS_START = 'USER/GET_ALL_USERS_START'
-const GET_ALL_USERS_SUCCESS = 'USER/GET_ALL_USERS_SUCCESS'
-const GET_ALL_USERS_FAIL = 'USER/POSTS/GET_ALL_USES_FAIL'
+const EMPLOYEE_LIST = 'GET_EMPLOYEE_LIST'
+const EDIT = 'EDIT_ENTRY'
+const SAVE = 'SAVE_ENTRY'
 
+export function getEmployeeList(params) {
+    console.log("check list params reducer", params)
+    return {
+        type: EMPLOYEE_LIST,
+        ...params
 
-export const fetchUserData = async (dispatch) => {
-    dispatch({ type: GET_ALL_USERS_START })
-    try {
-
-
-        let url = 'https://jsonplaceholder.typicode.com/users'
-
-        const response = await fetch(url, {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
-        })
-        const userData = await response.json()
-        dispatch({ type:GET_ALL_USERS_SUCCESS })
-
-        return {
-            payload: userData
-        };
     }
-    catch (error) {
-        dispatch({ type: GET_ALL_USERS_FAIL })
+}
+export function onEditHandler(params) {
+    console.log("check edit parameter", params.selectedRow)
+    return {
+        type: EDIT,
+        params
+    }
+}
+export function onSaveHandler(params) {
+    return {
+        type: SAVE,
+        params
     }
 }
 const initialState = {
-    userData: []
+    dataList: [],
+    selectedItem: {}
 }
 
-export default (state = initialState, action) => {
+export const UserReducer = (state = initialState, action) => {
+    console.log("REDUCERRRRRRRRRRRRRRRRR")
     switch (action.type) {
-        case GET_ALL_USERS_START:
-            return { ...state, error: false, areFetching: true }
-        case GET_ALL_USERS_SUCCESS:
-            return { ...state, userData: action.payload, areFetching: false }
-        case GET_ALL_USERS_FAIL:
-            return { ...state, error: true, areFetching: false }
+        case EMPLOYEE_LIST:
+            const tempArry = [...action.list]
+            console.log("temp arrayyyy", tempArry)
+            return { ...state, dataList: [...tempArry] }
+
+        case EDIT:
+            const { selectedRow } = action.params
+
+            console.log("check", selectedRow)
+            return { ...state, selectedItem: selectedRow }
+        case SAVE:
+            const newState = { ...state }
+            console.log("newState", newState)
+            const myList = newState.dataList
+            console.log("my liste here ", myList)
+            const { rowId, rowClicked, selectedEmpList, id, index, emplist,updatedStreet,itemId } = action.params
+            console.log("check saveeeeeeee", updatedStreet,itemId)
+
+            let templistt = [...myList]
+           const newList = templistt.map(item=>{ 
+                
+                if(rowClicked && item.id === itemId){
+                
+                    console.log("itemmmmmmm",item)
+                return {
+                    id: item.id,
+                    Name:item.Name,
+                    Age: item.Age,
+                    street:updatedStreet,
+                    Ischecked: item.Ischecked
+                }
+            }
+             else return item
+        }
+        
+            )
+            console.log("mmmmhhhoo",newList)
+           
+            // if (rowClicked && selectedEmpList !== '' && rowId === id) {
+            //     templistt.splice(index, 1, selectedEmpList)
+            // }
+            return { ...state, dataList: [...newList] }
 
         default:
             return state
     }
+
+}
+export const getList = (state) => {
+    return state.UserReducer.dataList
 }

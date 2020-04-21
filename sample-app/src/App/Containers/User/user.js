@@ -1,18 +1,23 @@
 import React from 'react'
-
+import { Button } from 'reactstrap';
 import { Table } from 'reactstrap'
 
-const UserTableModule = ({ slicedData }) => {
+const UserTableModule = ({ slicedData,onEditChangeHandler,onEditClickBtn,selectedItem,onSaveClickBtn,rowClicked,rowId,saveBtn}) => {
   console.log(slicedData, 'slicedData')
+  console.log("propssssssssss",rowClicked,rowId)
 
-  const renderRows = slicedData.map((user) => (
+  const renderRows = slicedData.map((data,index) =>
+  
+    (
+    (
 
     < tr >
-      <td>{user.id}</td>
-      <td>{user.name}</td>
-      {/* <td>{todo.completed.toString()}</td> */}
+      <td>{data.id}</td>
+      <td>{data.Name}</td>
+    <td>{rowClicked && data.id === rowId ?<input defaultValue={data.street} id="Name" name="name" key={data.id} onChange={(e) => onEditChangeHandler(e,data)}></input>:data.street} {saveBtn && rowClicked && rowId === data.id ? (<Button  color="warning" style={{marginLeft:'30px'}} onClick={()=>onEditClickBtn(data)}>Edit</Button>): null } <Button  color="warning" style={{marginLeft:'30px'}} onClick={()=>onEditClickBtn(data)}>Edit</Button><Button color="primary" onClick={(event)=>onSaveClickBtn(event,index,data.id)}>Save</Button></td>
+     
     </tr >
-  ))
+  )))
   return (
     <div style={{ width: '90%', padding: '10px', margin: '20px' }}>
       <Table dark striped hover>
@@ -20,7 +25,7 @@ const UserTableModule = ({ slicedData }) => {
           <tr>
             <th>ID</th>
             <th>Name</th>
-            {/* <th>Completed</th> */}
+            <th>Street</th>
           </tr>
         </thead>
 
