@@ -44,8 +44,8 @@ class UserDetails extends Component {
 
      },()=>{
       console.log("state!!!!!!!!!!!",this.state)
-      selectedItem.Name =this.state.name ,
-      selectedItem.street=this.state.street
+      selectedItem.Name =this.state.name?this.state.name:selectedItem.Name,
+      selectedItem.street=this.state.street?this.state.street:selectedItem.street
     //   this.setState({
     //     selectedItem: selectedItem,
     //   })
@@ -92,7 +92,9 @@ class UserDetails extends Component {
     
       rowClicked: false,
       rowId: '',
-      selectedItem: {}
+      selectedItem: {},
+      name:'',
+      street:''
      
     })
    
