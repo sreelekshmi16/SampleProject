@@ -15,95 +15,92 @@ const EmployeeList = [{ id: 1, Name: "anu", Age: "20", street: "jdjj,male", Isch
 
 class UserDetails extends Component {
   state = {
-    list: EmployeeList,
+    // list: EmployeeList,
     FetchedUserData: [],
     selectedItem: {},
     rowClicked: false,
     rowId: '',
-    // isEdited: false,
-    // street: '',
     saveBtn:false
   }
   componentDidMount() {
        const {list} = this.state
-      this.props.getEmployeeList({
-        list
-      })
       
   }
 
   onEditChangeHandler = (e, data) => {
     const { list, isEdited } = this.state
     const { selectedItem } = this.state;
-    let value = event.target.value
+    const {name,value} = e.target
     console.log("checkkkkkk value", value)
-    let fieldName = event.target.name
-
-    selectedItem.street = value ;
+    // selectedItem.street = value ;
     console.log("seeeeeeeeeeee",selectedItem)
 
 
     console.log("haiiiiiiiiiiiiiiiiiiii", selectedItem)
     this.setState({
       selectedItem: selectedItem,
-      [fieldName]: value,
-      isEdited: !isEdited,
+      [name]: value,
+     
 
-    })
+     },()=>{
+      console.log("state!!!!!!!!!!!",this.state)
+      selectedItem.Name =this.state.name ,
+      selectedItem.street=this.state.street
+    //   this.setState({
+    //     selectedItem: selectedItem,
+    //   })
+     }
+    )
   }
   onEditClickBtn = (data, id) => {
-    const street = data.street;
-    console.log("ccurrent streett", street)
-
-    const { selectedItem, isEdited,saveBtn } = this.state
-    console.log("is change in edit", isEdited)
+  
+    const { selectedItem} = this.state
+    
   
     this.setState({
       rowClicked: true,
       rowId: data.id,
-      street: street,
       saveBtn:true,
       selectedItem:{...data}
       // isEdited:!isEdited
 
-    })
+    },()=>{console.log("888888888",this.state.selectedItem)})
     this.props.onEditHandler({
       selectedRow:selectedItem
     })
   }
   onSaveClickBtn = (event, index, id) => {
-    console.log("vannuuuuuuuuuuuuuu",this.state.selectedItem)
-    const { rowId, rowClicked, isEdited, street } = this.state
+    console.log("current state",this.state)
    
-    console.log("is change in edit", isEdited)
-    const { list, selectedItem } = this.state;
+    const { rowId, rowClicked} = this.state
+    const { selectedItem,name,street} = this.state;
+    console.log("current street",street)
     const{EmpList}=this.props
-    let templist = [...list]
-    // let templist = [...EmpList]
+                  
     const tempArray = [selectedItem]
+  
+    console.log("editeddddddddd",selectedItem)
     const selectedlist = { ...selectedItem }
     console.log("selectedddddddd list", selectedlist)
-
-    console.log("temp spliced list", templist)
 
     this.props.onSaveHandler({
       rowId:rowId,
       rowClicked:rowClicked,
-      item:selectedItem,
-      updatedStreet:selectedItem.street,
+      // item:selectedItem,
+      // updatedStreet:selectedItem.street,
       itemId:selectedItem.id,
       selectedEmpList:selectedlist,
 
-      id:id,
-      index:index,
-      emplist:list
+      // id:id,
+      // index:index,
+      // emplist:list
     })
     this.setState({
-      list: templist,
+    
       rowClicked: false,
       rowId: '',
       selectedItem: {}
-      // isEdited:!isEdited
+     
     })
    
   }
@@ -114,10 +111,9 @@ class UserDetails extends Component {
     const{EmpList}=this.props;
    
     console.log("propppppppppppp",this.props)
-    // const temp =[...EmpList]
+   
     
-    
-    console.log("hoooooooooooooooooooo",EmpList)
+  
     return (
       <Fragment>
         <Button style={{ float: 'left', marginTop: '80px' }} color="danger">User component works!!!!!!!!!!</Button>
@@ -147,7 +143,7 @@ class UserDetails extends Component {
 
    const mapDispatchToProps=dispatch=>{
     return{
-      getEmployeeList:(params)=>dispatch(getEmployeeList(params)),
+      // getEmployeeList:(params)=>dispatch(getEmployeeList(params)),
       onEditHandler:(params)=>dispatch(onEditHandler(params)),
       onSaveHandler:(params)=>dispatch(onSaveHandler(params))
     }

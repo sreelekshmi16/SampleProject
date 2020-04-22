@@ -12,9 +12,22 @@ const UserTableModule = ({ slicedData,onEditChangeHandler,onEditClickBtn,selecte
     (
 
     < tr >
-      <td>{data.id}</td>
-      <td>{data.Name}</td>
-    <td>{rowClicked && data.id === rowId ?<input defaultValue={data.street} id="Name" name="name" key={data.id} onChange={(e) => onEditChangeHandler(e,data)}></input>:data.street} {saveBtn && rowClicked && rowId === data.id ? (<Button  color="warning" style={{marginLeft:'30px'}} onClick={()=>onEditClickBtn(data)}>Edit</Button>): null } <Button  color="warning" style={{marginLeft:'30px'}} onClick={()=>onEditClickBtn(data)}>Edit</Button><Button color="primary" onClick={(event)=>onSaveClickBtn(event,index,data.id)}>Save</Button></td>
+      <td>{data.id}</td> 
+     <td> {rowClicked && data.id === rowId ?<input defaultValue={data.Name} id="Name" name="name" key={data.id} onChange={(e) => onEditChangeHandler(e,data)}></input>:data.Name} </td>
+      {/* <td>{data.Name}</td> */}
+    <td>{rowClicked && data.id === rowId ?<input defaultValue={data.street} id="Street" name="street" key={data.id} onChange={(e) => onEditChangeHandler(e,data)}></input>:data.street}  {rowId === data.id ? (
+          <Button onClick={event => onSaveClickBtn(event, index, data.id)}>
+            Save
+          </Button>
+        ) : (
+          <Button
+            color="warning"
+            style={{ marginLeft: "30px" }}
+            onClick={() => onEditClickBtn(data)}
+          >
+            Edit
+          </Button>
+        )} </td>
      
     </tr >
   )))
