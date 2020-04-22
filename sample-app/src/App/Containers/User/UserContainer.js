@@ -75,25 +75,18 @@ class UserDetails extends Component {
     const { rowId, rowClicked} = this.state
     const { selectedItem,name,street} = this.state;
     console.log("current street",street)
-    const{EmpList}=this.props
-                  
-    const tempArray = [selectedItem]
   
-    console.log("editeddddddddd",selectedItem)
+    // console.log("editeddddddddd",selectedItem)
     const selectedlist = { ...selectedItem }
     console.log("selectedddddddd list", selectedlist)
 
     this.props.onSaveHandler({
       rowId:rowId,
       rowClicked:rowClicked,
-      // item:selectedItem,
-      // updatedStreet:selectedItem.street,
+      
       itemId:selectedItem.id,
       selectedEmpList:selectedlist,
 
-      // id:id,
-      // index:index,
-      // emplist:list
     })
     this.setState({
     
@@ -120,7 +113,7 @@ class UserDetails extends Component {
         <div>
           <UserTableModule
             // slicedData={list}
-            slicedData={EmpList}
+            renderData={EmpList}
             onEditChangeHandler={this.onEditChangeHandler}
             onEditClickBtn={this.onEditClickBtn}
             selectedItem={selectedItem}

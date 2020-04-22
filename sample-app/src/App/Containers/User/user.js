@@ -2,11 +2,11 @@ import React from 'react'
 import { Button } from 'reactstrap';
 import { Table } from 'reactstrap'
 
-const UserTableModule = ({ slicedData,onEditChangeHandler,onEditClickBtn,selectedItem,onSaveClickBtn,rowClicked,rowId,saveBtn}) => {
-  console.log(slicedData, 'slicedData')
+const UserTableModule = ({ renderData,onEditChangeHandler,onEditClickBtn,selectedItem,onSaveClickBtn,rowClicked,rowId,saveBtn}) => {
+  console.log(renderData, 'renderData')
   console.log("propssssssssss",rowClicked,rowId)
 
-  const renderRows = slicedData.map((data,index) =>
+  const renderRows = renderData.map((data,index) =>
   
     (
     (
